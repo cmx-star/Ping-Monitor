@@ -79,7 +79,7 @@ impl AppState {
             // .first => first in list
             
             let target_stat: Option<monitor::PingStats> = match settings.display_strategy.as_str() {
-                "average" => {
+                "mean" => {
                     let count = active_stats.len();
                     if count > 0 {
                         let sum: f64 = active_stats.iter().map(|s| s.current).sum();
@@ -100,7 +100,7 @@ impl AppState {
                     active_stats.sort_by(|a, b| b.current.partial_cmp(&a.current).unwrap_or(std::cmp::Ordering::Equal));
                     active_stats.first().map(|s| (*s).clone())
                 }
-                "best" => {
+                "fastest" => {
                    active_stats.sort_by(|a, b| a.current.partial_cmp(&b.current).unwrap_or(std::cmp::Ordering::Equal));
                    active_stats.first().map(|s| (*s).clone()) 
                 }

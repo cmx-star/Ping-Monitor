@@ -133,6 +133,26 @@ const settings = ref<AppSettings>({
   presets: [],
 });
 
+// Toast state
+const showToast = ref(false);
+const toastMessage = ref("");
+const toastType = ref<"success" | "error">("success");
+let toastTimeout: number | undefined;
+
+const triggerToast = (
+  message: string,
+  type: "success" | "error" = "success"
+) => {
+  toastMessage.value = message;
+  toastType.value = type;
+  showToast.value = true;
+
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = window.setTimeout(() => {
+    showToast.value = false;
+  }, 3000);
+};
+
 const logs = ref<LogEntry[]>([]); // To be populated from backend events or logs view logic
 
 // --- Methods ---
@@ -149,7 +169,13 @@ const loadSettings = async () => {
 };
 
 const saveSettings = async () => {
-  await invoke("apply_settings", { newSettings: settings.value });
+  try {
+    await invoke("apply_settings", { newSettings: settings.value });
+    triggerToast("设置已保存并应用", "success");
+  } catch (e) {
+    console.error("Failed to save settings:", e);
+    triggerToast(`保存失败: ${e}`, "error");
+  }
 };
 
 const startMonitoring = async (hostId: string) => {
@@ -466,6 +492,27 @@ onMounted(async () => {
       @close="showEditHostModal = false"
       @confirm="confirmUpdateHost"
     />
+
+    <!-- Toast Notification -->
+    <Transition name="toast">
+      <div
+        v-if="showToast"
+        :class="[
+          'fixed top-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 border backdrop-blur-md',
+          toastType === 'success'
+            ? 'bg-green-500/10 border-green-500/20 text-green-400'
+            : 'bg-red-500/10 border-red-500/20 text-red-400',
+        ]"
+      >
+        <div
+          :class="[
+            'w-2 h-2 rounded-full',
+            toastType === 'success' ? 'bg-green-500' : 'bg-red-500',
+          ]"
+        ></div>
+        <span class="text-xs font-bold">{{ toastMessage }}</span>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -537,5 +584,17 @@ input::placeholder {
 .modal-leave-to {
   opacity: 0;
   transform: scale(0.95) translateY(10px);
+}
+
+/* Toast Transition */
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
 }
 </style>
