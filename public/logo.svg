@@ -1,0 +1,16 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Transparent Background -->
+  
+  <!-- Pulse Line (Yellow) -->
+  <path d="M50 256 H150 L200 150 L250 350 L300 100 L350 256 H462" stroke="#FFCC00" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Shadow/Glow effect for Pulse (Yellowish) -->
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="15" result="blur"/>
+    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+  </filter>
+  <path d="M50 256 H150 L200 150 L250 350 L300 100 L350 256 H462" stroke="#FFCC00" stroke-width="25" stroke-opacity="0.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <!-- Text (Blue) -->
+  <text x="50%" y="450" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="80" fill="#3399FF">NetPulse</text>
+</svg>
