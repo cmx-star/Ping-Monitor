@@ -1,7 +1,60 @@
-# Tauri + Vue + TypeScript
+# Ping Monitor
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A beautiful, high-performance ping monitoring utility built with **Tauri**, **Vue 3**, and **Rust**.
 
-## Recommended IDE Setup
+![Tauri](https://img.shields.io/badge/Tauri-2.0-blue)
+![Vue](https://img.shields.io/badge/Vue-3.0-green)
+![Rust](https://img.shields.io/badge/Rust-1.70+-orange)
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## 🛠 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (v18 or newer)
+- **pnpm** (Recommended package manager)
+- **Rust** (Latest stable release)
+  - Install via: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+- **Tauri Dependencies**
+  - macOS: `xcode-select --install`
+
+## 🚀 Getting Started
+
+Follow these steps to get the project running locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/cmx-star/Ping-Monitor.git
+cd Ping-Monitor
+```
+
+### 2. Install Dependencies
+
+Install frontend dependencies using pnpm:
+
+```bash
+pnpm install
+```
+
+(Rust dependencies will be automatically handled by Cargo when you run the app).
+
+### 3. Run in Development Mode
+
+Start the Tauri development window with hot-reload:
+
+```bash
+pnpm tauri dev
+```
+
+### 4. Build for Production
+
+To create an optimized release bundle (DMG on macOS):
+
+```bash
+pnpm tauri build
+```
+
+## 🧩 Project Structure
+
+- `src/` - Vue 3 Frontend (UI)
+- `src-tauri/` - Rust Backend (System Tray, Pinger, Event Loop)
